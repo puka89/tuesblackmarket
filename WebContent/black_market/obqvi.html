@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Obqvi</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+	 <div id="wrap" ng-app ng-controller="ListAndDetailsController">
+		<div class="container">
+			<table class="table table-condensed table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Id</th> 
+						<th>Klas</th> 
+						<th>Predmet</th> 
+						<th>Status</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="entry in data" ng-click="showInfoForEntry(entry)">
+ 						<td>{{entry.workbook_id}}</td> 
+ 						<td>{{entry.workbook_klas}}</td> 
+ 						<td>{{entry.workbook_predmet}}</td> 
+ 						<td>{{entry.workbook_status}}</td> 
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-bordered" ng-show="showEntry">
+				<thead>
+					<tr>
+						<th>Attribute</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody ng-model="selectedEntry">
+					<tr>
+						<td width="50%">id</td>
+						<td width="50%">{{selectedEntry.workbook_id}}</td>
+					<tr>
+						<td width="50%">klas</td>
+						<td width="50%">{{selectedEntry.workbook_klas}}</td>
+					<tr>
+						<td width="50%">sustoqnie</td>
+						<td width="50%">{{selectedEntry.workbook_sustoqnie}}</td>
+					<tr>
+						<td width="50%">predmet</td>
+						<td width="50%">{{selectedEntry.workbook_predmet}}</td>
+					<tr>
+						<td width="50%">user</td>
+						<td width="50%">{{selectedEntry.workbook_user}}</td>
+					<tr>
+						<td width="50%">status</td>
+						<td width="50%">{{selectedEntry.workbook_status}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.2/angular-resource.min.js"></script>
+
+	<script type="text/javascript">
+		function ListAndDetailsController($scope, $http) {
+			
+			var url = '../../js/black_market/workbooks.js';
+
+			$http.get(url)
+			.success(function(data) {
+				$scope.data = data;
+			});
+
+			$scope.showEntry = false;
+			$scope.selectedEntry;
+
+			$scope.showInfoForEntry = function(entry) {
+				if ($scope.selectedEntry === entry) {
+					$scope.showEntry = false;
+					$scope.selectedEntry = null;
+				} else {
+					$scope.showEntry = true;
+					$scope.selectedEntry = entry;
+				}
+			}
+		}
+   </script>
+</body>
+</html>
